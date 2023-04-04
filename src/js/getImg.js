@@ -30,7 +30,6 @@ class Gallery {
   #onSearch(e) {
     e.preventDefault();
     this.#searchQuery = e.currentTarget.elements.searchQuery.value;
-    // this.#refs.loadMore.classList.remove('btn-hidden');
 
     if (!this.#searchQuery) {
       return Notiflix.Notify.warning('Please enter a search query');
@@ -78,15 +77,13 @@ class Gallery {
     }
 
     return this.#fetchImg().then(response => {
-      this.#response = {
-        ...this.#response,
-        hits: [...this.#response.hits, ...response.hits],
-      };
-      this.#render(this.#response.hits);
+      const newPict = response.hits;
+      this.#response.hits.splice(this.#response.hits.length, 0, ...newPict);
+      this.#render(newPict);
       this.#toggleMoreButton();
     });
   }
-
+  
   #onClickLoadMoreBtn() {
     this.#refs.loadMore.disabled = true;
 
@@ -108,7 +105,7 @@ class Gallery {
       hits => `
       <div class="photo-card">
         <a href="${hits.largeImageURL}" data-caption="${hits.tags}">
-          <img src="${hits.webformatURL}" alt="${hits.tags}" loading="lazy" />
+          <img src="${hits.webformatURL}" width="480" alt="${hits.tags}" loading="lazy" />
         </a>
         <div class="info">
           <p class="info-item">
