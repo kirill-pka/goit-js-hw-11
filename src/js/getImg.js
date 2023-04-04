@@ -8,6 +8,7 @@ class Gallery {
   #refs = {};
   #searchQuery = null;
   #response = [];
+  #lightbox = new SimpleLightbox('.gallery a', {});
   
 
   init() {
@@ -105,7 +106,7 @@ class Gallery {
       hits => `
       <div class="photo-card">
         <a href="${hits.largeImageURL}" data-caption="${hits.tags}">
-          <img src="${hits.webformatURL}" width="480" alt="${hits.tags}" loading="lazy" />
+          <img src="${hits.webformatURL}" alt="${hits.tags}" loading="lazy" />
         </a>
         <div class="info">
           <p class="info-item">
@@ -128,11 +129,9 @@ class Gallery {
       </div>
     `
     )
-    .join();
+    .join('');
     this.#refs.gallery.insertAdjacentHTML('beforeend', markup);
-
-    // Инициализация SimpleLightbox после рендеринга фотографий
-    const lightbox = new SimpleLightbox('.gallery a', {});
+    this.#lightbox.refresh();
   }
 
   #toggleMoreButton() {

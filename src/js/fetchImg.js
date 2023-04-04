@@ -7,7 +7,7 @@ const KEY = '14442544-a08ee5434eb4279558ca38254';
 const BASE_URL = `https://pixabay.com/api/?key=${KEY}&image_type=photo&orientation=horizontal&safesearch=true`
 
 class ImageService {
-  imgQuantity = 8;
+  imgQuantity = 40;
   page = 1;
   quantityPages = null;
 
